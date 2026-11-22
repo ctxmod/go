@@ -17,7 +17,7 @@ GOMEMLIMIT=1GiB ./myapp
 ```
 
 The limit is soft: the runtime may exceed it briefly during
-allocation bursts. Set it 5-10% above the hard container limit to
+allocation bursts. Set it 5-10% below the hard container limit to
 leave headroom for non-heap memory (goroutine stacks, GC metadata).
 
 ## GOGC
