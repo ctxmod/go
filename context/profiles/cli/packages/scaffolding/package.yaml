@@ -1,0 +1,5 @@
+description: >-
+  Scaffolding a new Go CLI project: thin main, an internal app package
+  per command, and the wiring of grammar, configuration, output, and
+  runtime.
+binds_to_depth: main...

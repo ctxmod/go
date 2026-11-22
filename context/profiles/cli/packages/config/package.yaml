@@ -1,0 +1,5 @@
+description: >-
+  Layered configuration for Go CLIs with koanf: defaults, config files,
+  environment, and flags, with discovery relative to a resolved base
+  directory.
+binds_to_depth: main...

@@ -1,0 +1,6 @@
+description: >-
+  Command grammar for Go CLIs built on Kong: struct-tag parsing,
+  command trees, and the Kong footguns (name derivation, envprefix scope,
+  dashed tag tokens, duplicate parent flags, parent Run on subcommand
+  paths).
+binds_to_depth: main...
