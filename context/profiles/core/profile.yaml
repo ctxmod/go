@@ -1,0 +1,4 @@
+title: Go Core
+description: >-
+  Go development with idiomatic patterns, testing, and package design
+  conventions. Every other go profile extends this one.

@@ -1,0 +1,14 @@
+title: Go
+description: >-
+  Idiomatic Go development: package design and decomposition, API and
+  interface discipline, error type design and wrapping, design for
+  testability, validation procedures, and common pitfalls (core); opt-in
+  profiles for command-line tools built on Kong, koanf, Bubble Tea and
+  mode-aware output (cli), and for long-lived networked services —
+  resilience, interceptors and tracing, RPC error semantics, and
+  contract governance (services).
+path: github.com/ctxmod/go/context
+requires:
+  - github.com/ctxmod/engineering/context
+default_profiles:
+  - core
