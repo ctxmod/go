@@ -33,21 +33,17 @@ func classifyError(err error) ErrorClassification {
 		return ClassDeadline
 	}
 
-	var classified ClassifiedError
-	if errors.As(err, &classified) {
+	if classified, ok := errors.AsType[ClassifiedError](err); ok {
 		return classified.Classification()
 	}
 
-	var rateLimitErr *provider.RateLimitError
-	if errors.As(err, &rateLimitErr) {
+	if _, ok := errors.AsType[*provider.RateLimitError](err); ok {
 		return ClassRateLimit
 	}
-	var permanentErr *provider.PermanentError
-	if errors.As(err, &permanentErr) {
+	if _, ok := errors.AsType[*provider.PermanentError](err); ok {
 		return ClassClient
 	}
-	var transientErr *provider.TransientError
-	if errors.As(err, &transientErr) {
+	if transientErr, ok := errors.AsType[*provider.TransientError](err); ok {
 		return classifyTransientCategory(transientErr.Category)
 	}
 
@@ -63,16 +59,13 @@ func classifyError(err error) ErrorClassification {
 	if errors.As(err, &netErr) && netErr.Timeout() {
 		return ClassTimeout
 	}
-	var opErr *net.OpError
-	if errors.As(err, &opErr) {
+	if _, ok := errors.AsType[*net.OpError](err); ok {
 		return ClassNetwork
 	}
-	var dnsErr *net.DNSError
-	if errors.As(err, &dnsErr) {
+	if _, ok := errors.AsType[*net.DNSError](err); ok {
 		return ClassNetwork
 	}
-	var urlErr *url.Error
-	if errors.As(err, &urlErr) {
+	if urlErr, ok := errors.AsType[*url.Error](err); ok {
 		if urlErr.Timeout() {
 			return ClassTimeout
 		}
@@ -128,8 +121,7 @@ func classifyTransientCategory(cat string) ErrorClassification {
 
 // extractErrno walks the error chain for a syscall.Errno.
 func extractErrno(err error) syscall.Errno {
-	var errno syscall.Errno
-	if errors.As(err, &errno) {
+	if errno, ok := errors.AsType[syscall.Errno](err); ok {
 		return errno
 	}
 	return 0
