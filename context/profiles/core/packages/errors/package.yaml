@@ -1,5 +1,6 @@
 description: >-
   Go error design: sentinels versus structured types versus opaque
   behaviour interfaces, chain inspection with errors.Is and errors.As,
-  errors.Join, and wrapping cross-package errors with context.
+  errors.AsType, errors.Join, and wrapping cross-package errors with
+  context.
 binds_to_depth: main...

@@ -19,6 +19,7 @@ Go provides three mechanisms for communicating failure information. Each serves 
 | Simple binary signal | Sentinel error (`var ErrNotFound = errors.New(...)`) | `io.EOF` |
 | Caller needs context fields | Structured error type (`type QueryError struct{...}`) | `os.PathError` |
 | Multiple errors from validation or cleanup | `errors.Join(err1, err2)` (Go 1.20+) | Accumulated option validation |
+| Caller extracts a typed error | `errors.AsType[*T](err)` (Go 1.26+), else `errors.As` | `errors.AsType[*fs.PathError](err)` |
 | Cross-library behavior checking | Opaque interface + `errors.As` | `Temporary() bool` |
 | Library public API boundary | Sentinel errors + opaque interfaces | Minimize type coupling |
 
@@ -45,6 +46,16 @@ if errors.As(err, &pathErr) {
 
 Both functions unwrap recursively. Callers never need manual unwrap loops or type switch chains.
 
+**`errors.AsType[E](err)`** (Go 1.26+) is the generic form of `errors.As`: it returns the matched value and a found flag, needs no pre-declared target variable, and is type-checked and faster. Prefer it in any module whose `go` directive is 1.26 or later; `go fix` (the modernizers since Go 1.26) rewrites eligible `errors.As` calls mechanically:
+
+```go
+if pathErr, ok := errors.AsType[*fs.PathError](err); ok {
+    log.Printf("operation %s failed on %s", pathErr.Op, pathErr.Path)
+}
+```
+
+`errors.As` stays correct and is still required below Go 1.26 or where the target must be reused across calls.
+
 ## Structured Error Pattern
 
 Export error types when callers need programmatic access to failure details. Each type carries fields relevant to its failure mode:
@@ -55,6 +66,7 @@ type QueryError struct {
     Query   string
     Code    int
     Message string
+    Cause   error // underlying driver or network error, if any
 }
 
 func (e *QueryError) Error() string {
@@ -66,6 +78,8 @@ func (e *QueryError) Unwrap() error { return e.Cause }
 ```
 
 Implement `Unwrap() error` when the structured error wraps an underlying cause. This preserves the chain so callers can inspect both the typed error and its root cause with a single `errors.As` call.
+
+Pick one receiver kind per error type and wrap that: a type with pointer-receiver methods is returned and wrapped as `*QueryError`. Since Go 1.27 the `go vet` printf check flags `fmt.Errorf("...: %w", p)` where `p` is a `*E` and `E` itself implements `error` — wrapping a pointer to a value-receiver error type makes `errors.Is` and type assertions fail spuriously.
 
 ## Opaque Error Handling
 
@@ -136,3 +150,10 @@ Errors returned to external callers (CLI main functions, HTTP handlers) where wr
 ### Tooling
 
 The `wrapcheck` linter enforces cross-package wrapping automatically.
+
+## Sources
+
+- https://pkg.go.dev/errors#AsType — `func AsType[E error](err error) (E, bool)`, tree traversal and `As(any) bool` matching (added in Go 1.26; documented at go1.27.4; accessed 2026-11-22)
+- https://go.dev/doc/go1.26 — `errors.AsType` and the rewritten `go fix` hosting the modernizers (Go 1.26, released 2026-02-10; accessed 2026-11-22)
+- https://go.dev/doc/go1.27 — printf analyzer reports `%w` operands of type `*E` where `E` implements `error` (Go 1.27, released 2026-08-19; accessed 2026-11-22)
+- https://go.dev/blog/go1.13-errors — `errors.Is`/`errors.As` and `%w` wrapping (accessed 2026-11-22)
