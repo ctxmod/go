@@ -1,0 +1,14 @@
+title: Go Services
+description: >-
+  Go networked service development — resilience under partial failure,
+  interceptor and tracing layers, structured RPC error semantics, and
+  schema-first contract governance. Extends the go core profile.
+extends:
+  - github.com/ctxmod/go/context/profiles/core
+packages:
+  add:
+    - overview
+    - resilience
+    - telemetry
+    - rpc_errors
+    - contracts
