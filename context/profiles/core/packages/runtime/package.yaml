@@ -1,0 +1,4 @@
+description: >-
+  Go runtime operation: GOMEMLIMIT and GOGC tuning, why ulimit -v kills
+  Go programs, and periodic GC in batch loops.
+binds_to_depth: main...

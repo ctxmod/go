@@ -1,0 +1,5 @@
+description: >-
+  Design for testability in Go (interface segregation, dependency
+  inversion, minimal surface) and the black-box testing procedure: test
+  doubles, package-level tests, and where defect-focused effort goes.
+binds_to_depth: main...
