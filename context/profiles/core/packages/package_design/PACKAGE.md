@@ -12,6 +12,7 @@ The Go workflow library defines how to design, implement, and validate Go packag
 
 Design principles behind the convention rules:
 
+- the language, standard-library, and tooling baseline the code is written against — the `go` directive, iterators, generics additions, `encoding/json/v2`, `os.Root`, and the `go fix` modernizers — [Modern Go Baseline](../baseline/reference/modern_go.md)
 - functional options for public library APIs, config structs for internal and performance-critical paths — [Options Pattern](../api_design/reference/options_pattern.md)
 - structuring packages around single cohesive concepts and when to split — [Package Decomposition](reference/package_decomposition.md)
 - testability as a side effect of interface segregation, dependency inversion, and minimal API surface — [Testability](../testing/reference/testability.md)

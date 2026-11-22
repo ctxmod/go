@@ -67,6 +67,26 @@ for _, tt := range tests {
 }
 ```
 
+Since Go 1.22 each loop iteration declares a fresh `tt` (the main module's `go` directive must be 1.22 or later), so the `tt := tt` copy before `t.Run` with `t.Parallel()` is dead code; `go fix` removes it.
+
+### The Modern `testing` Surface
+
+Prefer the standard-library mechanisms over hand-rolled equivalents; each removes a class of flaky or leaky test:
+
+| Need | Mechanism (version) | Replaces |
+|------|---------------------|----------|
+| Context bound to the test's lifetime | `t.Context()` (1.24) — canceled just before `t.Cleanup` functions run | `context.WithCancel` plus a deferred cancel per test |
+| Working directory change | `t.Chdir(dir)` (1.24) — restored after the test; incompatible with `t.Parallel` | manual `os.Chdir` with a deferred restore |
+| Benchmark loop | `for b.Loop() { ... }` (1.24) — setup outside the loop is excluded from timing, and the body is kept from being optimized away (no longer blocks inlining since 1.26) | `for i := 0; i < b.N; i++` plus `b.ResetTimer` and sink variables |
+| Time- and concurrency-dependent code | `synctest.Test(t, func(t *testing.T) {...})` (1.25) with `synctest.Wait()` and `synctest.Sleep(d)` (1.27) — a bubble with a fake clock that advances only when every goroutine in it is durably blocked; `httptest.NewTestServer` (1.27) serves inside a bubble | real `time.Sleep`, polling loops, injected clock interfaces added only for tests |
+| Files a test produces for later inspection | `t.ArtifactDir()` (1.26), kept with `go test -artifacts` | ad-hoc writes into `testdata/` or `/tmp` |
+| Structured test metadata and unprefixed log output | `t.Attr(k, v)` and `t.Output()` (1.25) | parsing free-form `t.Log` lines |
+| Deterministic crypto randomness | `testing/cryptotest.SetGlobalRandom` (1.26) — the `crypto/...` random parameters are ignored since 1.26 | passing a seeded reader to crypto APIs |
+
+`synctest` limits: mutex locking, network I/O, and system calls are not "durably blocked", so code blocked on them stalls the fake clock; channels, timers, and `WaitGroup`s created in a bubble panic when used from outside it; and `t.Run`, `t.Parallel`, and `t.Deadline` must not be called on the bubble's `*testing.T`.
+
+Run concurrency-bearing packages with the race detector (`go test -race`) when a question touches shared state; a clean race run covers only the interleavings that executed.
+
 ### Integration-Style Tests
 
 A test that needs an external resource (database, network service) must not run by default. Two mechanisms bound its cost: `//go:build integration` gates entire files at compilation (selected with `go test -tags integration ./...`), and `if testing.Short() { t.Skip("requires database") }` skips tests during short runs (`go test -short ./...`). Select them only when the question or acceptance criterion needs them.
@@ -148,3 +168,12 @@ Use coverage reports to identify untested code paths, not as a target to maximiz
 7. **Validate independence**: Confirm each test passes in isolation (`go test -run '^TestName$'`, and `-shuffle=on` for order dependence) without importing siblings of the exercised package.
 
 [Testability as Emergent Property](testability.md)
+
+## Sources
+
+- https://go.dev/doc/go1.24 — `T.Context`, `T.Chdir`, `B.Loop` (Go 1.24, released 2025-02-11; accessed 2026-11-22)
+- https://go.dev/doc/go1.25 — `testing/synctest` generally available, `T.Attr`, `T.Output` (Go 1.25, released 2025-08-12; accessed 2026-11-22)
+- https://go.dev/doc/go1.26 — `T.ArtifactDir` and `go test -artifacts`, `cryptotest.SetGlobalRandom`, `B.Loop` no longer prevents inlining (Go 1.26, released 2026-02-10; accessed 2026-11-22)
+- https://go.dev/doc/go1.27 — `synctest.Sleep`, `httptest.NewTestServer` (Go 1.27, released 2026-08-19; accessed 2026-11-22)
+- https://pkg.go.dev/testing/synctest — bubble semantics, durable blocking, restrictions (go1.27.4; accessed 2026-11-22)
+- https://go.dev/blog/loopvar-preview — per-iteration loop variables keyed by the `go` directive (Go 1.22; accessed 2026-11-22)

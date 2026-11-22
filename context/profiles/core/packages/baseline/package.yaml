@@ -1,0 +1,6 @@
+description: >-
+  The Go language and standard-library baseline through Go 1.27: release
+  and support cadence, the go directive, iterators, generics additions,
+  encoding/json/v2, os.Root, sync.WaitGroup.Go, and the go fix, go vet,
+  go tool, and govulncheck tooling that keeps code current.
+binds_to_depth: main...

@@ -34,7 +34,7 @@ for _, file := range pass.Files {
 }
 ```
 
-Register the analyzer as a golangci-lint module plugin (golangci-lint v1.57+) for CI integration. The module plugin system compiles custom analyzers without upstream merging.
+Register the analyzer as a golangci-lint module plugin for CI integration. The module plugin system (introduced in v1.57 and carried into the v2 line) compiles custom analyzers into a custom binary without upstream merging: `.custom-gcl.yml` names the golangci-lint version and the plugin modules, `golangci-lint custom` builds the binary, and the v2 `.golangci.yml` enables the linter with `type: "module"` under `linters.settings.custom.<name>`.
 
 ### Entry Point Detection
 
@@ -96,3 +96,7 @@ Each check failure maps to specific corrective actions.
 | `apidiff` | Breaking change detection between versions | CI pipeline |
 
 Three custom analyzers close the automation gap: (1) API surface analyzer for symbol and entry point counting, (2) options complexity analyzer for per-constructor option counting, (3) consumer-interface analyzer for detecting producer-defined interfaces that should be consumer-owned. Until these exist, substitute manual `go doc` review against the thresholds table.
+
+## Sources
+
+- https://golangci-lint.run/docs/plugins/module-plugins/ — `.custom-gcl.yml`, `golangci-lint custom`, and enabling a module plugin in a v2 configuration (golangci-lint v2 line; accessed 2026-11-22)
