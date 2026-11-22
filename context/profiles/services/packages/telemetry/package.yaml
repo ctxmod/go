@@ -1,4 +1,6 @@
 description: >-
   Uniform client and server interceptor layers for Go services, W3C
-  TraceContext and baggage propagation, and OTLP wiring.
+  TraceContext and baggage propagation, OTLP wiring, and the Go
+  specifics: otelgrpc stats handlers, grpc.NewClient, and slog log
+  correlation.
 binds_to_depth: main...
