@@ -1,0 +1,11 @@
+# Mark test files as generated
+*_test.go linguist-generated
+
+# Mark Go sum files as generated
+*.sum linguist-generated
+
+# Mark docs as generated
+*.md linguist-generated
+
+# Mark generated code
+**/gen/** linguist-generated

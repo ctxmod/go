@@ -1,0 +1,5 @@
+description: >-
+  Go traps that compile cleanly and fail silently: os.IsNotExist on
+  wrapped errors, tri-state bool config fields in YAML, and t.TempDir
+  paths that overflow the unix-socket address budget.
+binds_to_depth: main...

@@ -1,4 +1,17 @@
 title: Go Core
 description: >-
   Go development with idiomatic patterns, testing, and package design
-  conventions. Every other go profile extends this one.
+  conventions: API and interface discipline, error design and wrapping,
+  package decomposition with planning and refactoring procedures,
+  design for testability, measurable validation procedures, runtime
+  memory tuning, and silent-failure pitfalls. Every other go profile
+  extends this one.
+packages:
+  defaults:
+    - api_design
+    - errors
+    - package_design
+    - testing
+    - validation
+    - runtime
+    - pitfalls

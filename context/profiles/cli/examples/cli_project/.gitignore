@@ -1,0 +1,49 @@
+# Ignore all root-level files and directories
+/*
+
+# But keep these directories
+!/apps/
+!/docs/
+!/pkg/
+!/tools/
+
+# And keep these specific files
+!.editorconfig
+!.env.example
+!.gitattributes
+!.gitignore
+!.golangci.yml
+!.npmrc
+!.pre-commit-config.yaml
+!go.mod
+!go.sum
+!package.json
+!README.md
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+.env
+
+# Environment files
+# Allow committed defaults and templates
+!.env.defaults
+!.env.template
+!.env.test
+!.env.ci
+# Block local overrides with secrets
+infra/env/.env.local
+.env.local
+.env.*.local
+
+# Ignore Temporary files
+*.tmp
+*.temp
+*.swp
+*.pyc
+*.bak
+*~
+
+# Local workspace files
+go.work
+go.work.sum

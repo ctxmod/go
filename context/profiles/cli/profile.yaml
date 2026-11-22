@@ -1,0 +1,15 @@
+title: Go CLI
+description: >-
+  Go command-line application development using Kong for command
+  parsing, koanf for layered configuration, Bubble Tea for terminal UI,
+  and mode-aware structured output with a context-bound runtime;
+  includes a complete example project. Extends the go core profile.
+extends:
+  - github.com/ctxmod/go/context/profiles/core
+packages:
+  add:
+    - grammar
+    - config
+    - output
+    - tui
+    - scaffolding

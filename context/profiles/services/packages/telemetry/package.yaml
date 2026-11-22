@@ -1,0 +1,4 @@
+description: >-
+  Uniform client and server interceptor layers for Go services, W3C
+  TraceContext and baggage propagation, and OTLP wiring.
+binds_to_depth: main...

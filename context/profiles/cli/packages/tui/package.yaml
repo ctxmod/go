@@ -1,0 +1,4 @@
+description: >-
+  Terminal user interfaces with Bubble Tea and Bubbles: the Elm
+  architecture, component composition, and when a TUI is warranted.
+binds_to_depth: main...

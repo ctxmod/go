@@ -1,0 +1,5 @@
+description: >-
+  Measurable Go package validation procedures: API surface thresholds,
+  dependency analysis, documentation quality for go doc consumers, and
+  package structure checks.
+binds_to_depth: main...

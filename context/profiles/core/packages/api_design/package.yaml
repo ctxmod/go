@@ -1,0 +1,5 @@
+description: >-
+  Go API shape: small consumer-defined interfaces, concrete constructor
+  returns, minimal exported surface with internal/ packages, and
+  functional options versus config structs.
+binds_to_depth: main...

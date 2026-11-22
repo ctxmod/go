@@ -1,0 +1,5 @@
+description: >-
+  Mode-aware CLI output: stdout carries data and stderr carries
+  diagnostics, human versus machine output modes, and a context-bound
+  runtime with typed exit codes and lifecycle hooks.
+binds_to_depth: main...
