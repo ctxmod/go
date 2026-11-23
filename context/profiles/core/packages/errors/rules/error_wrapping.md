@@ -1,8 +1,3 @@
----
-paths:
-  - "*.go"
----
-
 # Error Wrapping Context
 
 Wrap all cross-package errors with context using `fmt.Errorf("context: %w", err)`. The `%w` verb preserves the original error in the chain so `errors.Is` and `errors.As` continue to match wrapped values; returning a bare `err` loses caller context and breaks the chain.

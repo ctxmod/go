@@ -4,3 +4,7 @@ description: >-
   encoding/json/v2, os.Root, sync.WaitGroup.Go, and the go fix, go vet,
   go tool, and govulncheck tooling that keeps code current.
 binds_to_depth: main...
+binds_to_paths:
+  - "*.go"
+  - "go.mod"
+  - "go.work"

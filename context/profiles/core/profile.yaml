@@ -12,6 +12,7 @@ packages:
     - baseline
     - api_design
     - errors
+    - workflow
     - package_design
     - testing
     - validation
