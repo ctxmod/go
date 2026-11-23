@@ -275,6 +275,10 @@ func (c *ListCmd) Run(ctx context.Context) error {
 
 Standalone utility scripts that produce only plain text and will never need JSON output may use `fmt` directly. This exception does not apply to any command within a Kong-structured application.
 
+## Stdout verbosity precedence
+
+Stdout verbosity resolves with a fixed precedence — quiet > an explicit stdout-verbosity setting > a deprecated verbose alias > the default (warn); the explicit setting outranks the deprecated alias, and the stdout axis is separate from log verbosity; explicitly requested debug logging bypasses a quiet output delegate and writes straight to stderr, because a quiet delegate that suppresses all log methods would otherwise drop the records silently.
+
 ## Related
 
 [Kong Command Parsing](../../grammar/reference/kong_parsing.md)

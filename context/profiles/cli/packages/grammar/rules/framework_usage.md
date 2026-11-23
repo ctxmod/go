@@ -6,10 +6,5 @@ Each command struct lives in its own package under `internal/app/{command}/` wit
 
 No exceptions: when the go `cli` profile applies, always use Kong for command parsing and the full package structure regardless of CLI complexity.
 
-- tag grammar, flag-derivation traps, bind system, lifecycle hooks, the Kong conventions list, and the worked correct/incorrect command examples — [Kong Command Parsing](../reference/kong_parsing.md)
-- Elm Architecture, program options, Bubbles catalog, and the scenario table for choosing Bubble Tea over the output interface — [Bubble Tea and Bubbles](../../tui/reference/bubbletea_bubbles.md)
-- the output abstraction Kong commands render through — [Output Interface](../../output/reference/output_modes.md)
-- the koanf precedence stack that sits behind Kong's grammar — [Configuration Layering with koanf](../../config/reference/config_layering.md)
-- the `Runtime` injected into every `Run()` method — [Runtime](../../output/reference/runtime_injection.md)
-- camelCase flag derivation, positional-arg and name-position footguns, testing the derived grammar, shared global-flag short-alias and enum-sync constraints, Kong defaults erasing "unset", parent-flag redeclaration panics, and parent `Run` firing on subcommand paths — [Kong grammar footguns](../reference/kong_footguns.md)
-- scaffolding a new CLI project with the Kong grammar, shared config/output/runtime packages, and context-based dependency injection — [CLI Project Scaffolding](../../scaffolding/reference/project_scaffolding.md); the complete buildable project is the profile's example, `examples/cli_project`
+- Kong tags, binds, hooks, conventions and worked command examples — [Kong Command Parsing](../reference/kong_parsing.md); flag-derivation and grammar traps — [Kong grammar footguns](../reference/kong_footguns.md)
+- where Bubble Tea, the output interface, koanf configuration, the runtime and project scaffolding are documented — [Go CLI Reference Map](../reference/cli_reference_map.md)
