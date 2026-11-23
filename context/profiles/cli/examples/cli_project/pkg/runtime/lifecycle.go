@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"runtime/debug"
+	"slices"
 )
 
 // Hook runs around a command. A Before hook that fails stops the command.
@@ -39,8 +40,8 @@ func RunCommand(ctx context.Context, rt *Runtime, cmd string, cmdFunc func(ctx c
 
 	err = cmdFunc(ctx)
 
-	for i := len(rt.hooks.After) - 1; i >= 0; i-- {
-		if herr := rt.hooks.After[i](ctx, rt, cmd); herr != nil && err == nil {
+	for _, v := range slices.Backward(rt.hooks.After) {
+		if herr := v(ctx, rt, cmd); herr != nil && err == nil {
 			err = herr
 		}
 	}

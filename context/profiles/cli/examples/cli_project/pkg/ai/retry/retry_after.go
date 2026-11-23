@@ -31,8 +31,7 @@ func parseRetryAfter(err error) time.Duration {
 		return 0
 	}
 
-	var classified ClassifiedError
-	if errors.As(err, &classified) {
+	if classified, ok := errors.AsType[ClassifiedError](err); ok {
 		if d := classified.RetryAfter(); d > 0 {
 			return d
 		}

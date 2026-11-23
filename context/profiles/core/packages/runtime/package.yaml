@@ -1,4 +1,5 @@
 description: >-
-  Go runtime operation: GOMEMLIMIT and GOGC tuning, why ulimit -v kills
-  Go programs, and periodic GC in batch loops.
+  Go runtime operation: GOMEMLIMIT and GOGC tuning, container-aware
+  GOMAXPROCS, the Green Tea collector, the goroutine-leak profile, why
+  ulimit -v kills Go programs, and periodic GC in batch loops.
 binds_to_depth: main...

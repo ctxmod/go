@@ -117,8 +117,7 @@ func (m *MultiError) ExitCode() ExitCode {
 	var maxCode ExitCode
 	for _, e := range m.Errors {
 		code := ExitSoftware
-		var ee *ExitError
-		if errors.As(e, &ee) {
+		if ee, ok := errors.AsType[*ExitError](e); ok {
 			code = ee.Code
 		}
 		maxCode = max(maxCode, code)
@@ -135,12 +134,10 @@ func ExitCodeFromError(ctx context.Context, err error) ExitCode {
 	if err == nil {
 		return ExitOK
 	}
-	var me *MultiError
-	if errors.As(err, &me) {
+	if me, ok := errors.AsType[*MultiError](err); ok {
 		return me.ExitCode()
 	}
-	var ee *ExitError
-	if errors.As(err, &ee) {
+	if ee, ok := errors.AsType[*ExitError](err); ok {
 		return ee.Code
 	}
 	if ctx.Err() != nil {

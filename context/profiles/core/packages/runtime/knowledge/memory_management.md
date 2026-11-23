@@ -41,8 +41,10 @@ GOMEMLIMIT=1GiB GOGC=50 ./myapp
 ```
 
 `GOGC=50` makes the GC trigger earlier in each cycle, while
-`GOMEMLIMIT=1GiB` enforces a hard ceiling. The two compose: whichever
-triggers first wins.
+`GOMEMLIMIT=1GiB` makes it collect harder as total Go memory nears 1 GiB.
+The two compose — whichever triggers first wins — but neither is a hard
+ceiling: the memory limit stays soft, and only the container's cgroup
+limit (or the kernel OOM killer) enforces a hard one.
 
 ## CRITICAL: ulimit -v is incompatible with Go
 
@@ -63,7 +65,46 @@ that works with the GC, not against it.
 
 For container environments, set a cgroup memory limit (Docker
 `--memory`, Kubernetes `resources.limits.memory`) and pair it with
-`GOMEMLIMIT` at ~90% of the container limit.
+`GOMEMLIMIT` at ~90% of the container limit. The runtime reads the cgroup
+CPU limit on its own (next section) but documents no memory-limit
+equivalent through Go 1.27, so `GOMEMLIMIT` stays an explicit setting.
+
+## GOMAXPROCS is container-aware (Go 1.25+)
+
+Since Go 1.25 the default `GOMAXPROCS` on Linux is the lower of the
+logical CPU count and the cgroup CPU *bandwidth limit* (CPU requests are
+ignored), and on every OS the runtime re-reads it periodically as the CPU
+count or the limit changes. This replaces the old practice of importing
+`go.uber.org/automaxprocs` for containerized services: on a `go 1.25`+
+module the default is already right, so drop the dependency rather than
+stacking two mechanisms.
+
+- Setting `GOMAXPROCS` explicitly (environment or `runtime.GOMAXPROCS`)
+  disables both behaviors; `runtime.SetDefaultGOMAXPROCS()` restores the
+  runtime default after an override.
+- `GODEBUG=containermaxprocs=0` and `updatemaxprocs=0` opt out of the
+  cgroup read and the periodic update respectively. The behavior follows
+  the main module's `go` directive, so an older directive keeps the old
+  default.
+
+## Garbage collector generation (Go 1.26+)
+
+Go 1.26 made the Green Tea collector the default (an experiment in 1.25).
+The release notes expect 10–40% less GC overhead in GC-heavy programs.
+The `GOEXPERIMENT=nogreenteagc` opt-out was announced for removal in Go
+1.27, so treat it as a bisection aid, never a deployment setting. Re-measure
+`GOGC`/`GOMEMLIMIT` tuning carried over from older toolchains instead of
+assuming it still holds.
+
+## Goroutine leaks are profileable (Go 1.27+)
+
+The `goroutineleak` profile (experimental in 1.26, generally available in
+1.27) reports goroutines blocked on channels, mutexes, or condition
+variables that the GC can prove will never wake; it is served at
+`/debug/pprof/goroutineleak` and through `runtime/pprof`. It uses GC
+reachability, so it misses leaks whose primitive is reachable from a global
+or from a runnable goroutine's locals — a clean profile is evidence, not
+proof, of no leaks.
 
 ## Periodic runtime.GC() for batch processing
 
@@ -87,3 +128,11 @@ This is a hint, not a command -- the runtime may collect sooner or
 later regardless. Reserve it for loops where per-iteration heap growth
 is large (multi-MiB buffers) and the total file count is high (thousands).
 For most code, the default GC triggers are sufficient.
+
+## Sources
+
+- https://go.dev/doc/go1.25 — container-aware and periodically updated `GOMAXPROCS`, `SetDefaultGOMAXPROCS`, `containermaxprocs`/`updatemaxprocs` (Go 1.25, released 2025-08-12; accessed 2026-11-22)
+- https://go.dev/doc/go1.26 — Green Tea GC on by default, `nogreenteagc` opt-out slated for removal in 1.27 (Go 1.26, released 2026-02-10; accessed 2026-11-22)
+- https://go.dev/doc/go1.27 — `goroutineleak` profile generally available, its reachability limits (Go 1.27, released 2026-08-19; accessed 2026-11-22)
+- https://go.dev/doc/godebug — `containermaxprocs`/`updatemaxprocs` and how GODEBUG defaults follow the main module's `go` line (accessed 2026-11-22)
+- https://go.dev/doc/gc-guide — `GOGC` and the soft memory limit semantics (accessed 2026-11-22)
