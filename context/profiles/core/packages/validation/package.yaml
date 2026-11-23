@@ -3,3 +3,5 @@ description: >-
   dependency analysis, documentation quality for go doc consumers, and
   package structure checks.
 binds_to_depth: main...
+binds_to_paths:
+  - "*.go"

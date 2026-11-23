@@ -3,3 +3,5 @@ description: >-
   inversion, minimal surface) and the black-box testing procedure: test
   doubles, package-level tests, and where defect-focused effort goes.
 binds_to_depth: main...
+binds_to_paths:
+  - "*.go"

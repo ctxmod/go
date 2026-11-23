@@ -1,8 +1,3 @@
----
-paths:
-  - "*.go"
----
-
 # Internal Visibility
 
 Place non-public implementation under `internal/` packages. Target >50% internal code for libraries, >70% for services. Go's `internal/` directory enforces encapsulation at the compiler level — importers outside the parent tree cannot access it — so the guarantee does not rely on naming conventions or documentation.

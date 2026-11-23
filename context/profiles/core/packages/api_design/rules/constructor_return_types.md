@@ -1,8 +1,3 @@
----
-paths:
-  - "*.go"
----
-
 # Constructor Return Types
 
 Return concrete types (`*ConcreteType`) from constructors. Do not return interfaces from `New*` functions — concrete return types allow adding methods without breaking API compatibility, and consumers define their own narrow interfaces that concrete types satisfy implicitly through structural typing.

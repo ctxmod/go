@@ -4,3 +4,5 @@ description: >-
   errors.AsType, errors.Join, and wrapping cross-package errors with
   context.
 binds_to_depth: main...
+binds_to_paths:
+  - "*.go"

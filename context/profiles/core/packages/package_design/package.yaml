@@ -1,0 +1,9 @@
+description: >-
+  The Go development workflow library: package design principles plus
+  the planning and refactoring procedures; consult on demand during Go
+  package work.
+binds_to_depth: main...
+binds_to_paths:
+  - "*.go"
+  - "go.mod"
+  - "go.work"
