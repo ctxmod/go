@@ -6,7 +6,5 @@ stdout carries the final result payload only (text, JSON, NDJSON, yamlish). stde
 
 One exception: standalone utility scripts that produce only plain text and will never need JSON output may use `fmt` directly. It does not apply to any command within a Kong-structured application.
 
-- the full `Output` interface, the six output modes, formatting interfaces, the stream-separation and constraint tables, and the worked correct/incorrect examples — [Output Interface](../reference/output_modes.md)
-- how `Runtime` embeds `Output` and reaches commands through context — [Runtime](../reference/runtime_injection.md)
-- `kong.Writers(stdout, stderr)` for redirecting Kong's own help and error output — [Kong Command Parsing](../../grammar/reference/kong_parsing.md)
-- stdout verbosity resolves with a fixed precedence — quiet > an explicit stdout-verbosity setting > a deprecated verbose alias > the default (warn); the explicit setting outranks the deprecated alias, and the stdout axis is separate from log verbosity; explicitly requested debug logging bypasses a quiet output delegate and writes straight to stderr, because a quiet delegate that suppresses all log methods would otherwise drop the records silently
+- the full `Output` interface, the six output modes, formatting interfaces, the stream-separation and constraint tables, the precedence that stdout verbosity settings resolve by, and the worked correct/incorrect examples — [Output Interface](../reference/output_modes.md)
+- how `Runtime` embeds `Output` and reaches commands through context — [Runtime](../reference/runtime_injection.md); `kong.Writers(stdout, stderr)` for redirecting Kong's own help and error output — [Kong Command Parsing](../../grammar/reference/kong_parsing.md)
