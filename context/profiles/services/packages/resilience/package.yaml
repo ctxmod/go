@@ -3,3 +3,5 @@ description: >-
   at the edge, bounded concurrency, circuit breaking, retries with
   budgets, client-side throttling, and L7 load balancing.
 binds_to_depth: main...
+binds_to_paths:
+  - "*.go"

@@ -2,3 +2,8 @@ description: >-
   Schema-first service contract governance: compatibility gates,
   reserved tags, presence semantics, and generated-code discipline.
 binds_to_depth: main...
+binds_to_paths:
+  - "*.proto"
+  - "buf.yaml"
+  - "buf.gen.yaml"
+  - "buf.work.yaml"

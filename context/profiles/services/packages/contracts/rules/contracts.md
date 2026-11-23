@@ -1,31 +1,3 @@
----
-paths:
-  - "*.proto"
-  - "*/*.proto"
-  - "*/*/*.proto"
-  - "*/*/*/*.proto"
-  - "*/*/*/*/*.proto"
-  - "*/*/*/*/*/*.proto"
-  - "buf.yaml"
-  - "*/buf.yaml"
-  - "*/*/buf.yaml"
-  - "*/*/*/buf.yaml"
-  - "*/*/*/*/buf.yaml"
-  - "*/*/*/*/*/buf.yaml"
-  - "buf.gen.yaml"
-  - "*/buf.gen.yaml"
-  - "*/*/buf.gen.yaml"
-  - "*/*/*/buf.gen.yaml"
-  - "*/*/*/*/buf.gen.yaml"
-  - "*/*/*/*/*/buf.gen.yaml"
-  - "buf.work.yaml"
-  - "*/buf.work.yaml"
-  - "*/*/buf.work.yaml"
-  - "*/*/*/buf.work.yaml"
-  - "*/*/*/*/buf.work.yaml"
-  - "*/*/*/*/*/buf.work.yaml"
----
-
 # Contract Governance
 
 The schema module is the single source for every consumer's generated

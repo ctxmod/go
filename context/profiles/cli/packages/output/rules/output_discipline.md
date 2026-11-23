@@ -1,17 +1,3 @@
----
-paths:
-  - "*.go"
-  - "*/*.go"
-  - "*/*/*.go"
-  - "*/*/*/*.go"
-  - "*/*/*/*/*.go"
-  - "*/*/*/*/*/*.go"
-  - "*/*/*/*/*/*/*.go"
-  - "*/*/*/*/*/*/*/*.go"
-  - "*/*/*/*/*/*/*/*/*.go"
-  - "*/*/*/*/*/*/*/*/*/*.go"
----
-
 # Output Discipline
 
 Route all output through the runtime's output interface, obtained via `runtime.FromContext(ctx)`. Never call `fmt.Println`, `fmt.Fprintf(os.Stdout, ...)`, or `log.Println` directly from command handlers — raw print calls bypass the output mode abstraction and break JSON and NDJSON output.
