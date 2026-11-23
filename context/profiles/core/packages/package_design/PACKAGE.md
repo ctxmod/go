@@ -6,8 +6,7 @@ description: >-
 binds_to_depth: main...
 ---
 
-# Go Development Workflow
+# Go
 
-The Go workflow library defines how to design, implement, and validate Go packages. Consult it on demand during package work. [workflow_index.md](reference/workflow_index.md) says which reference covers the language baseline, API design, package decomposition, testability, planning, refactoring, testing, and the validation thresholds.
-
-Before a public-API change, count its out-of-repo consumers. Other checkouts that depend on this module's live working tree (for example through a `replace` directive pointing at a sibling directory) are invisible to the in-repo `go build ./...`.
+This module's rules load once the session reads or writes a `.go`, `go.mod` or `go.work` file. Even the first Go file wraps cross-package errors with `%w`, returns concrete types from constructors, and keeps non-public code under `internal/`.
+The on-demand references are indexed in `context/profiles/core/packages/package_design/reference/workflow_index.md` in the github.com/ctxmod/go repository.

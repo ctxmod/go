@@ -1,0 +1,5 @@
+description: >-
+  Scope of the go services profile and its reference surface:
+  resilience, interceptors and tracing, RPC error semantics, and
+  contract governance for long-lived networked Go services.
+binds_to_depth: main...

@@ -1,3 +1,17 @@
+---
+paths:
+  - "*.go"
+  - "*/*.go"
+  - "*/*/*.go"
+  - "*/*/*/*.go"
+  - "*/*/*/*/*.go"
+  - "*/*/*/*/*/*.go"
+  - "*/*/*/*/*/*/*.go"
+  - "*/*/*/*/*/*/*/*.go"
+  - "*/*/*/*/*/*/*/*/*.go"
+  - "*/*/*/*/*/*/*/*/*/*.go"
+---
+
 # Service Error Semantics
 
 Errors crossing a service boundary are translated to structured RPC status

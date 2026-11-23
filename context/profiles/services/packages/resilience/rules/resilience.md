@@ -1,3 +1,17 @@
+---
+paths:
+  - "*.go"
+  - "*/*.go"
+  - "*/*/*.go"
+  - "*/*/*/*.go"
+  - "*/*/*/*/*.go"
+  - "*/*/*/*/*/*.go"
+  - "*/*/*/*/*/*/*.go"
+  - "*/*/*/*/*/*/*/*.go"
+  - "*/*/*/*/*/*/*/*/*.go"
+  - "*/*/*/*/*/*/*/*/*/*.go"
+---
+
 # Go Service Resilience
 
 Concurrency in service code is bounded: work enters through fixed-size worker
