@@ -4,3 +4,5 @@ description: >-
   dashed tag tokens, duplicate parent flags, parent Run on subcommand
   paths).
 binds_to_depth: main...
+binds_to_paths:
+  - "*.go"

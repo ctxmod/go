@@ -1,17 +1,3 @@
----
-paths:
-  - "*.go"
-  - "*/*.go"
-  - "*/*/*.go"
-  - "*/*/*/*.go"
-  - "*/*/*/*/*.go"
-  - "*/*/*/*/*/*.go"
-  - "*/*/*/*/*/*/*.go"
-  - "*/*/*/*/*/*/*/*.go"
-  - "*/*/*/*/*/*/*/*/*.go"
-  - "*/*/*/*/*/*/*/*/*/*.go"
----
-
 # Go Services Scope
 
 Scope: long-lived networked Go services — RPC and HTTP servers behind load

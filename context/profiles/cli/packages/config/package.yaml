@@ -3,3 +3,5 @@ description: >-
   environment, and flags, with discovery relative to a resolved base
   directory.
 binds_to_depth: main...
+binds_to_paths:
+  - "*.go"

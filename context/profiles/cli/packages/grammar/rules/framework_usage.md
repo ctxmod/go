@@ -1,17 +1,3 @@
----
-paths:
-  - "*.go"
-  - "*/*.go"
-  - "*/*/*.go"
-  - "*/*/*/*.go"
-  - "*/*/*/*/*.go"
-  - "*/*/*/*/*/*.go"
-  - "*/*/*/*/*/*/*.go"
-  - "*/*/*/*/*/*/*/*.go"
-  - "*/*/*/*/*/*/*/*/*.go"
-  - "*/*/*/*/*/*/*/*/*/*.go"
----
-
 # Framework Usage
 
 Define all commands, flags, and arguments as struct fields with Kong tags. Dispatch through Kong's `Run()` method convention. Use Bubble Tea exclusively for interactive terminal views rendered on stderr.

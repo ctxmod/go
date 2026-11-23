@@ -2,3 +2,5 @@ description: >-
   Structured RPC error semantics for Go services: status codes with
   machine-readable details and retryability classification.
 binds_to_depth: main...
+binds_to_paths:
+  - "*.go"

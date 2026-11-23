@@ -4,3 +4,5 @@ description: >-
   specifics: otelgrpc stats handlers, grpc.NewClient, and slog log
   correlation.
 binds_to_depth: main...
+binds_to_paths:
+  - "*.go"

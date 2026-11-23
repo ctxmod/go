@@ -3,3 +3,5 @@ description: >-
   resilience, interceptors and tracing, RPC error semantics, and
   contract governance for long-lived networked Go services.
 binds_to_depth: main...
+binds_to_paths:
+  - "*.go"
